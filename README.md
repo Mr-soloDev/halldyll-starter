@@ -64,21 +64,21 @@ RUNPOD_RECONCILE_MODE=reuse
 
 ### Environment Variables Reference
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `RUNPOD_API_KEY` | ✓ | - | RunPod API key |
-| `RUNPOD_IMAGE_NAME` | ✓ | - | Container image (e.g., `runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel`) |
-| `RUNPOD_POD_NAME` | | `halldyll-pod` | Name for the pod |
-| `RUNPOD_GPU_TYPE_IDS` | | `NVIDIA A40` | Comma-separated GPU types (e.g., `NVIDIA A40,NVIDIA RTX 4090`) |
-| `RUNPOD_GPU_COUNT` | | `1` | Number of GPUs |
-| `RUNPOD_CONTAINER_DISK_GB` | | `20` | Container disk size in GB |
-| `RUNPOD_VOLUME_GB` | | `0` | Persistent volume size (0 = no volume) |
-| `RUNPOD_VOLUME_MOUNT_PATH` | | `/workspace` | Mount path for persistent volume |
-| `RUNPOD_PORTS` | | `22/tcp,8888/http` | Exposed ports (format: `port/protocol`) |
-| `RUNPOD_HTTP_TIMEOUT_MS` | | `30000` | HTTP request timeout (ms) |
-| `RUNPOD_READY_TIMEOUT_MS` | | `300000` | Pod ready timeout (ms) |
-| `RUNPOD_POLL_INTERVAL_MS` | | `5000` | Poll interval for readiness (ms) |
-| `RUNPOD_RECONCILE_MODE` | | `reuse` | `reuse` or `recreate` existing pods |
+| Variable                   | Required | Default            | Description                                                              |
+|----------------------------|----------|--------------------|--------------------------------------------------------------------------|
+| `RUNPOD_API_KEY`           | ✓        | -                  | RunPod API key                                                           |
+| `RUNPOD_IMAGE_NAME`        | ✓        | -                  | Container image (e.g., `runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel`)   |
+| `RUNPOD_POD_NAME`          |          | `halldyll-pod`     | Name for the pod                                                         |
+| `RUNPOD_GPU_TYPE_IDS`      |          | `NVIDIA A40`       | Comma-separated GPU types (e.g., `NVIDIA A40,NVIDIA RTX 4090`)           |
+| `RUNPOD_GPU_COUNT`         |          | `1`                | Number of GPUs                                                           |
+| `RUNPOD_CONTAINER_DISK_GB` |          | `20`               | Container disk size in GB                                                |
+| `RUNPOD_VOLUME_GB`         |          | `0`                | Persistent volume size (0 = no volume)                                   |
+| `RUNPOD_VOLUME_MOUNT_PATH` |          | `/workspace`       | Mount path for persistent volume                                         |
+| `RUNPOD_PORTS`             |          | `22/tcp,8888/http` | Exposed ports (format: `port/protocol`)                                  |
+| `RUNPOD_HTTP_TIMEOUT_MS`   |          | `30000`            | HTTP request timeout (ms)                                                |
+| `RUNPOD_READY_TIMEOUT_MS`  |          | `300000`           | Pod ready timeout (ms)                                                   |
+| `RUNPOD_POLL_INTERVAL_MS`  |          | `5000`             | Poll interval for readiness (ms)                                         |
+| `RUNPOD_RECONCILE_MODE`    |          | `reuse`            | `reuse` or `recreate` existing pods                                      |
 
 ### Pod Naming & Multiple Pods
 
@@ -240,25 +240,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ## Modules
 
-| Module | Description |
-|--------|-------------|
-| `runpod_provisioner` | Create new pods via REST API |
-| `runpod_starter` | Start/stop existing pods via REST API |
-| `runpod_state` | State persistence and reconciliation |
-| `runpod_client` | GraphQL client for advanced operations |
-| `runpod_orchestrator` | High-level pod management |
+| Module                 | Description                              |
+|------------------------|------------------------------------------|
+| `runpod_provisioner`   | Create new pods via REST API             |
+| `runpod_starter`       | Start/stop existing pods via REST API    |
+| `runpod_state`         | State persistence and reconciliation     |
+| `runpod_client`        | GraphQL client for advanced operations   |
+| `runpod_orchestrator`  | High-level pod management                |
 
 ## GPU Types
 
 Common GPU types available on RunPod:
 
-| GPU | ID |
-|-----|-----|
-| NVIDIA A40 | `NVIDIA A40` |
-| NVIDIA A100 80GB | `NVIDIA A100 80GB PCIe` |
-| NVIDIA RTX 4090 | `NVIDIA GeForce RTX 4090` |
-| NVIDIA RTX 3090 | `NVIDIA GeForce RTX 3090` |
-| NVIDIA L40S | `NVIDIA L40S` |
+| GPU              | ID                        |
+|------------------|---------------------------|
+| NVIDIA A40       | `NVIDIA A40`              |
+| NVIDIA A100 80GB | `NVIDIA A100 80GB PCIe`   |
+| NVIDIA RTX 4090  | `NVIDIA GeForce RTX 4090` |
+| NVIDIA RTX 3090  | `NVIDIA GeForce RTX 3090` |
+| NVIDIA L40S      | `NVIDIA L40S`             |
 
 Use `client.list_gpu_types()` to get the full list with availability.
 
