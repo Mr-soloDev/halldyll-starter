@@ -32,8 +32,6 @@ tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 halldyll_starter_runpod = { git = "https://github.com/Mr-soloDev/halldyll-starter" }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-```
 
 ## Configuration
 
