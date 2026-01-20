@@ -1,5 +1,9 @@
 # Halldyll Starter RunPod
 
+[![Crates.io](https://img.shields.io/crates/v/halldyll_starter_runpod.svg)](https://crates.io/crates/halldyll_starter_runpod)
+[![Documentation](https://docs.rs/halldyll_starter_runpod/badge.svg)](https://docs.rs/halldyll_starter_runpod)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A comprehensive Rust library for managing RunPod GPU pods with automatic provisioning, state management, and orchestration.
 
 ## Features
@@ -13,21 +17,21 @@ A comprehensive Rust library for managing RunPod GPU pods with automatic provisi
 
 ## Installation
 
-### From GitHub
-
-Add to your `Cargo.toml`:
+### From crates.io (recommended)
 
 ```toml
 [dependencies]
-halldyll_starter = { git = "https://github.com/halldyll/starter" }
+halldyll_starter_runpod = "0.1"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
-### From local path
+### From GitHub
 
 ```toml
 [dependencies]
-halldyll_starter = { path = "path/to/starter" }
+halldyll_starter_runpod = { git = "https://github.com/Mr-soloDev/halldyll-starter" }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+```
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -109,7 +113,7 @@ Each unique name creates a separate pod on RunPod.
 The orchestrator provides the simplest way to get a ready-to-use pod:
 
 ```rust
-use halldyll_starter::{RunpodOrchestrator, RunpodOrchestratorConfig};
+use halldyll_starter_runpod::{RunpodOrchestrator, RunpodOrchestratorConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -141,7 +145,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 For direct pod creation:
 
 ```rust
-use halldyll_starter::{RunpodProvisioner, RunpodProvisionConfig};
+use halldyll_starter_runpod::{RunpodProvisioner, RunpodProvisionConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -160,7 +164,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 For managing existing pods:
 
 ```rust
-use halldyll_starter::{RunpodStarter, RunpodStarterConfig};
+use halldyll_starter_runpod::{RunpodStarter, RunpodStarterConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -184,7 +188,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 For advanced operations:
 
 ```rust
-use halldyll_starter::{RunpodClient, RunpodClientConfig};
+use halldyll_starter_runpod::{RunpodClient, RunpodClientConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -212,7 +216,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 For persistent state and reconciliation:
 
 ```rust
-use halldyll_starter::{RunPodState, JsonFileStateStore, PlannedAction};
+use halldyll_starter_runpod::{RunPodState, JsonFileStateStore, PlannedAction};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let store = JsonFileStateStore::new("./pod_state.json");

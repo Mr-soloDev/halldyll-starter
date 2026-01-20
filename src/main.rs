@@ -1,4 +1,4 @@
-//! Example binary demonstrating the halldyll_starter library.
+//! Example binary demonstrating the halldyll_starter_runpod library.
 //!
 //! This example shows how to use the orchestrator to get a ready pod.
 //!
@@ -9,7 +9,7 @@
 
 #![allow(clippy::print_stdout)] // Allow println! in the binary example
 
-use halldyll_starter::{RunpodOrchestrator, RunpodOrchestratorConfig};
+use halldyll_starter_runpod::{RunpodOrchestrator, RunpodOrchestratorConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

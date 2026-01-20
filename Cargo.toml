@@ -1,16 +1,23 @@
 [package]
-name = "halldyll_starter"
+name = "halldyll_starter_runpod"
 version = "0.1.0"
 edition = "2024"
-description = "RunPod pod orchestration library for provisioning, starting, and managing GPU pods"
+authors = ["Mr-soloDev <geryan.roy@icloud.com>"]
+description = "Rust library for managing RunPod GPU pods - Provisioning, orchestration & state management"
 license = "MIT"
+repository = "https://github.com/Mr-soloDev/halldyll-starter"
+homepage = "https://github.com/Mr-soloDev/halldyll-starter"
+documentation = "https://docs.rs/halldyll_starter_runpod"
+readme = "README.md"
+keywords = ["runpod", "gpu", "cloud", "orchestration", "machine-learning"]
+categories = ["api-bindings", "asynchronous"]
 
 [lib]
-name = "halldyll_starter"
+name = "halldyll_starter_runpod"
 path = "src/lib.rs"
 
 [[bin]]
-name = "halldyll_starter"
+name = "halldyll_starter_runpod"
 path = "src/main.rs"
 
 [dependencies]

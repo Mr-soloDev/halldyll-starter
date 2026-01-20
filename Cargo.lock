@@ -281,7 +281,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "halldyll_starter"
+name = "halldyll_starter_runpod"
 version = "0.1.0"
 dependencies = [
  "dotenvy",
