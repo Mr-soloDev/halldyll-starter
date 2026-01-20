@@ -21,7 +21,7 @@ A comprehensive Rust library for managing RunPod GPU pods with automatic provisi
 
 ```toml
 [dependencies]
-halldyll_starter_runpod = "0.1"
+halldyll_starter_runpod = "0.2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
