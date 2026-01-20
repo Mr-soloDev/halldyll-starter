@@ -138,6 +138,65 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
+### Stopping & Terminating Pods
+
+```rust
+use halldyll_starter_runpod::{RunpodOrchestrator, RunpodOrchestratorConfig};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let cfg = RunpodOrchestratorConfig::from_env()?;
+    let orchestrator = RunpodOrchestrator::new(cfg)?;
+
+    // Get a ready pod
+    let pod = orchestrator.ensure_ready_pod().await?;
+    println!("Pod running: {}", pod.id);
+
+    // Do your work...
+
+    // Stop the pod (keeps config, can restart later, stops billing)
+    orchestrator.stop_pod(&pod.id).await?;
+    println!("Pod stopped!");
+
+    // Or stop by name (uses RUNPOD_POD_NAME from .env)
+    // orchestrator.stop_current_pod().await?;
+
+    // Or terminate completely (deletes the pod)
+    // orchestrator.terminate(&pod.id).await?;
+    // orchestrator.terminate_current_pod().await?;
+
+    Ok(())
+}
+```
+
+### Auto-stop after timeout
+
+```rust
+use halldyll_starter_runpod::{RunpodOrchestrator, RunpodOrchestratorConfig};
+use std::time::Duration;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let cfg = RunpodOrchestratorConfig::from_env()?;
+    let orchestrator = RunpodOrchestrator::new(cfg)?;
+
+    let pod = orchestrator.ensure_ready_pod().await?;
+    println!("Pod running for max 1 hour...");
+
+    // Auto-stop after 1 hour
+    tokio::select! {
+        _ = tokio::time::sleep(Duration::from_secs(3600)) => {
+            println!("Timeout reached, stopping pod...");
+            orchestrator.stop_pod(&pod.id).await?;
+        }
+        // Or wait for your task to complete
+        // result = your_long_running_task() => { ... }
+    }
+
+    Ok(())
+}
+```
+
 ### Low-Level Provisioner
 
 For direct pod creation:

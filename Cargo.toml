@@ -1,6 +1,6 @@
 [package]
 name = "halldyll_starter_runpod"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Mr-soloDev <geryan.roy@icloud.com>"]
 description = "Rust library for managing RunPod GPU pods - Provisioning, orchestration & state management"

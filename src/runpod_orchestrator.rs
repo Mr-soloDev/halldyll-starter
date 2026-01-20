@@ -259,6 +259,78 @@ impl RunpodOrchestrator {
         Ok(pods)
     }
 
+    /// Stop a running pod (puts it in EXITED state, can be restarted later).
+    ///
+    /// Use this to pause billing while keeping the pod configuration.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the HTTP request fails or the API returns an error.
+    pub async fn stop_pod(&self, pod_id: &str) -> Result<(), OrchestratorError> {
+        let url = format!(
+            "{}/pods/{}/stop",
+            self.cfg.rest_url.trim_end_matches('/'),
+            pod_id
+        );
+
+        let resp = self
+            .http
+            .post(&url)
+            .bearer_auth(&self.cfg.api_key)
+            .send()
+            .await
+            .map_err(OrchestratorError::Http)?;
+
+        let status = resp.status();
+        if !status.is_success() {
+            let body = resp.text().await.unwrap_or_default();
+            return Err(OrchestratorError::Api { status, body });
+        }
+
+        Ok(())
+    }
+
+    /// Stop the pod by name (uses the configured pod name).
+    ///
+    /// Convenience method that finds the pod by name and stops it.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the pod is not found or the stop operation fails.
+    pub async fn stop_current_pod(&self) -> Result<(), OrchestratorError> {
+        let pod = self
+            .find_pod_by_name(&self.cfg.pod_name)
+            .await?
+            .ok_or_else(|| OrchestratorError::PodNotFound(self.cfg.pod_name.clone()))?;
+
+        self.stop_pod(&pod.id).await
+    }
+
+    /// Terminate a pod completely (removes it from RunPod).
+    ///
+    /// Use this when you no longer need the pod. The pod cannot be restarted.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the HTTP request fails or the API returns an error.
+    pub async fn terminate(&self, pod_id: &str) -> Result<(), OrchestratorError> {
+        self.terminate_pod(pod_id).await
+    }
+
+    /// Terminate the pod by name (uses the configured pod name).
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the pod is not found or the terminate operation fails.
+    pub async fn terminate_current_pod(&self) -> Result<(), OrchestratorError> {
+        let pod = self
+            .find_pod_by_name(&self.cfg.pod_name)
+            .await?
+            .ok_or_else(|| OrchestratorError::PodNotFound(self.cfg.pod_name.clone()))?;
+
+        self.terminate_pod(&pod.id).await
+    }
+
     /// Find a pod by name.
     async fn find_pod_by_name(&self, name: &str) -> Result<Option<PodInfo>, OrchestratorError> {
         let pods = self.list_pods().await?;
