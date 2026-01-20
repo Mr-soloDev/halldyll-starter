@@ -80,6 +80,28 @@ RUNPOD_RECONCILE_MODE=reuse
 | `RUNPOD_POLL_INTERVAL_MS` | | `5000` | Poll interval for readiness (ms) |
 | `RUNPOD_RECONCILE_MODE` | | `reuse` | `reuse` or `recreate` existing pods |
 
+### Pod Naming & Multiple Pods
+
+The orchestrator uses the pod name to identify and reuse existing pods:
+
+- **Same name** → Reuses the existing pod (starts it if stopped)
+- **Different name** → Creates a new pod
+
+To run multiple pods simultaneously, simply use different names:
+
+```env
+# Development pod
+RUNPOD_POD_NAME=dev-pod
+
+# Production pod  
+RUNPOD_POD_NAME=prod-pod
+
+# ML training pod
+RUNPOD_POD_NAME=training-pod
+```
+
+Each unique name creates a separate pod on RunPod.
+
 ## Usage
 
 ### Quick Start with Orchestrator

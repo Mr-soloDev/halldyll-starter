@@ -76,14 +76,6 @@ pub struct RunpodProvisionConfig {
     /// Env: `RUNPOD_HTTP_TIMEOUT_MS` (default: 15000)
     pub timeout_ms: u64,
 
-    /// Whether to start Jupyter on pod creation.
-    /// Env: `RUNPOD_START_JUPYTER` (default: false)
-    pub start_jupyter: bool,
-
-    /// Whether to start SSH on pod creation.
-    /// Env: `RUNPOD_START_SSH` (default: true)
-    pub start_ssh: bool,
-
     /// Additional environment variables for the pod (JSON object string).
     /// Env: `RUNPOD_POD_ENV` (optional, JSON format: {"KEY": "value"})
     pub pod_env: HashMap<String, String>,
@@ -109,8 +101,6 @@ impl RunpodProvisionConfig {
     /// - `RUNPOD_PORTS`: Comma-separated ports (default: "22/tcp,8888/http")
     /// - `RUNPOD_NETWORK_VOLUME_ID`: Network volume ID (optional)
     /// - `RUNPOD_HTTP_TIMEOUT_MS`: HTTP timeout (default: 15000)
-    /// - `RUNPOD_START_JUPYTER`: Start Jupyter (default: false)
-    /// - `RUNPOD_START_SSH`: Start SSH (default: true)
     /// - `RUNPOD_POD_ENV`: Additional pod env vars as JSON (optional)
     ///
     /// # Errors
@@ -148,9 +138,6 @@ impl RunpodProvisionConfig {
                 .filter(|s| !s.trim().is_empty()),
 
             timeout_ms: parse_u64_env("RUNPOD_HTTP_TIMEOUT_MS", 15_000)?,
-
-            start_jupyter: parse_bool_env("RUNPOD_START_JUPYTER", false),
-            start_ssh: parse_bool_env("RUNPOD_START_SSH", true),
 
             pod_env,
         })
@@ -202,8 +189,6 @@ impl RunpodProvisioner {
             ports: self.cfg.ports.clone(),
             env: self.cfg.pod_env.clone(),
             networkVolumeId: self.cfg.network_volume_id.clone(),
-            startJupyter: self.cfg.start_jupyter,
-            startSsh: self.cfg.start_ssh,
         };
 
         let resp = self
@@ -255,8 +240,6 @@ struct CreatePodRequest {
     env: HashMap<String, String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     networkVolumeId: Option<String>,
-    startJupyter: bool,
-    startSsh: bool,
 }
 
 #[derive(Debug, Deserialize)]
@@ -353,12 +336,6 @@ fn parse_u64_env(key: &'static str, default: u64) -> Result<u64, RunpodError> {
             })
         },
     )
-}
-
-fn parse_bool_env(key: &'static str, default: bool) -> bool {
-    env::var(key).map_or(default, |v| {
-        matches!(v.to_lowercase().as_str(), "true" | "1" | "yes")
-    })
 }
 
 fn split_csv_env(key: &'static str, default: &str) -> Vec<String> {
