@@ -1,4 +1,4 @@
-# Halldyll Starter
+# Halldyll Starter RunPod
 
 A comprehensive Rust library for managing RunPod GPU pods with automatic provisioning, state management, and orchestration.
 
@@ -65,7 +65,7 @@ RUNPOD_RECONCILE_MODE=reuse
 ### Environment Variables Reference
 
 | Variable | Required | Default | Description |
-|----------|----------|---------|-------------|*
+|----------|----------|---------|-------------|
 | `RUNPOD_API_KEY` | ✓ | - | RunPod API key |
 | `RUNPOD_IMAGE_NAME` | ✓ | - | Container image (e.g., `runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel`) |
 | `RUNPOD_POD_NAME` | | `halldyll-pod` | Name for the pod |
@@ -241,7 +241,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ## Modules
 
 | Module | Description |
-|--------|-------------|*
+|--------|-------------|
 | `runpod_provisioner` | Create new pods via REST API |
 | `runpod_starter` | Start/stop existing pods via REST API |
 | `runpod_state` | State persistence and reconciliation |
@@ -253,7 +253,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 Common GPU types available on RunPod:
 
 | GPU | ID |
-|-----|-----|*
+|-----|-----|
 | NVIDIA A40 | `NVIDIA A40` |
 | NVIDIA A100 80GB | `NVIDIA A100 80GB PCIe` |
 | NVIDIA RTX 4090 | `NVIDIA GeForce RTX 4090` |
