@@ -1,0 +1,21 @@
+[package]
+name = "halldyll_starter"
+version = "0.1.0"
+edition = "2024"
+description = "RunPod pod orchestration library for provisioning, starting, and managing GPU pods"
+license = "MIT"
+
+[lib]
+name = "halldyll_starter"
+path = "src/lib.rs"
+
+[[bin]]
+name = "halldyll_starter"
+path = "src/main.rs"
+
+[dependencies]
+dotenvy = "0.15"
+reqwest = { version = "0.13", features = ["json"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

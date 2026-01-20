@@ -1,0 +1,16 @@
+# Build artifacts
+/target
+
+# Environment (contains API keys)
+.env
+.runpod_state.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
